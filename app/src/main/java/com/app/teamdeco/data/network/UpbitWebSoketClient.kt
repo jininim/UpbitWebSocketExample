@@ -1,7 +1,7 @@
 package com.app.teamdeco.data.network
 
 import android.util.Log
-import com.app.teamdeco.data.model.Coin
+import com.app.teamdeco.data.model.Ticker
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -9,16 +9,23 @@ import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString
+import javax.inject.Inject
 
-class UpbitWebSocketClient() {
+
+class UpbitWebSocketClient @Inject constructor() {
     data class Ticket(val ticket: String)
     data class Type(val type: String, val codes: List<String>)
 
 
     private val gson = Gson()
     private val okHttpClient = OkHttpClient()
-
     private var webSocketList: MutableList<WebSocket> = mutableListOf()
+
+    private var onTickerDataReceived: ((Ticker) -> Unit)? = null
+
+    fun setOnTickerDataReceived(callback: (Ticker) -> Unit) {
+        onTickerDataReceived = callback
+    }
 
 
     fun startListenTicker() {
@@ -36,7 +43,7 @@ class UpbitWebSocketClient() {
             super.onOpen(webSocket, response)
             //연결 성공
             Log.i("JINNN", "WebSoket 연결 성공")
-            webSocket.send(createTicket()) //요청
+            webSocket.send(createTicker()) //요청
         }
 
         override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
@@ -44,13 +51,14 @@ class UpbitWebSocketClient() {
 
             val bytesToString = bytes.toByteArray().decodeToString()
 //            Log.i("JINNN", "bytesToString:  $bytesToString")
-            val coin = gson.fromJson(bytesToString, Coin::class.java)
-            Log.i("JINNN", "coin:  $coin")
-            // TODO coin handle
+            val ticker = gson.fromJson(bytesToString, Ticker::class.java)
+            // 콜백 호출
+            onTickerDataReceived?.invoke(ticker)
+
         }
     }
 
-    fun createTicket(): String {
+    fun createTicker(): String {
         val ticket = Ticket("ticker")
         val codeList = arrayListOf(
             "KRW-SAND",
