@@ -2,7 +2,7 @@ package com.app.teamdeco.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Coin(
+data class Ticker(
     val code: String, //마켓 코드 (ex. KRW-BTC)
     @SerializedName("trade_price")
     val tradePrice: Double, //현재가
