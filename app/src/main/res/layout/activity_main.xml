@@ -19,21 +19,22 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="한글명" />
+        android:textAlignment="center"
+        android:text="코드" />
 
     <Button
         android:id="@+id/bt_tradePrice"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="현재가" />
 
     <Button
         android:id="@+id/bt_Atp24h"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="거래대금" />

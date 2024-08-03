@@ -11,7 +11,9 @@ import okhttp3.WebSocketListener
 import okio.ByteString
 import javax.inject.Inject
 
-
+/*
+* 업비트 웹 소켓 연결 및 데이터 수신
+* */
 class UpbitWebSocketClient @Inject constructor() {
     data class Ticket(val ticket: String)
     data class Type(val type: String, val codes: List<String>)
@@ -27,7 +29,7 @@ class UpbitWebSocketClient @Inject constructor() {
         onTickerDataReceived = callback
     }
 
-
+    //웹 소켓 연결
     fun startListenTicker() {
         val request = Request.Builder()
             .url("wss://api.upbit.com/websocket/v1")
@@ -42,13 +44,12 @@ class UpbitWebSocketClient @Inject constructor() {
         override fun onOpen(webSocket: WebSocket, response: Response) {
             super.onOpen(webSocket, response)
             //연결 성공
-            Log.i("JINNN", "WebSoket 연결 성공")
+//            Log.i("JINNN", "WebSocket 연결 성공")
             webSocket.send(createTicker()) //요청
         }
 
         override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
             super.onMessage(webSocket, bytes)
-
             val bytesToString = bytes.toByteArray().decodeToString()
 //            Log.i("JINNN", "bytesToString:  $bytesToString")
             val ticker = gson.fromJson(bytesToString, Ticker::class.java)
