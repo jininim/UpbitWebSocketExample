@@ -1,6 +1,5 @@
 package com.app.teamdeco.data.network
 
-import android.util.Log
 import com.app.teamdeco.data.model.Ticker
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
@@ -44,14 +43,12 @@ class UpbitWebSocketClient @Inject constructor() {
         override fun onOpen(webSocket: WebSocket, response: Response) {
             super.onOpen(webSocket, response)
             //연결 성공
-//            Log.i("JINNN", "WebSocket 연결 성공")
             webSocket.send(createTicker()) //요청
         }
 
         override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
             super.onMessage(webSocket, bytes)
             val bytesToString = bytes.toByteArray().decodeToString()
-//            Log.i("JINNN", "bytesToString:  $bytesToString")
             val ticker = gson.fromJson(bytesToString, Ticker::class.java)
             // 콜백 호출
             onTickerDataReceived?.invoke(ticker)

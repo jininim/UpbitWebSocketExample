@@ -1,12 +1,10 @@
 package com.app.teamdeco.data.repository
 
-import androidx.lifecycle.viewModelScope
 import com.app.teamdeco.data.model.PriceChange
 import com.app.teamdeco.data.model.Ticker
 import com.app.teamdeco.data.network.UpbitWebSocketClient
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 

@@ -1,15 +1,11 @@
 package com.app.teamdeco.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
-import com.app.teamdeco.data.repository.TickerRepository
 import com.app.teamdeco.data.model.Ticker
+import com.app.teamdeco.data.repository.TickerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
